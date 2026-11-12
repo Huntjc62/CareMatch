@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create your CareMatch account as a care professional or care provider.">
+  <title>Get started | CareMatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script defer src="onboarding.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">C</span><span>Care<span class="brand-accent">Match</span></span></a>
+    <div class="account-nav"><a class="btn secondary small" href="index.html">Back to home</a><a class="btn small" href="index.html?view=login" id="login-link">Log in</a></div>
+  </header>
+  <main class="app-shell">
+    <section class="onboarding-intro">
+      <span class="eyebrow">Get started with CareMatch</span>
+      <h1>Create the right account for you.</h1>
+      <p class="form-intro">Choose how you want to use CareMatch. We'll tailor your account and workspace to your role.</p>
+    </section>
+    <section class="onboarding-layout">
+      <div class="account-type-grid onboarding-types" aria-label="Choose account type">
+        <button type="button" class="account-type-option onboarding-choice" data-role="candidate" aria-pressed="false">
+          <span class="account-type-icon" aria-hidden="true">👤</span>
+          <strong>I'm a care professional</strong>
+          <small>I'm looking for care work, want to showcase my skills and find suitable opportunities.</small>
+          <span class="choice-action">Continue as a care professional →</span>
+        </button>
+        <button type="button" class="account-type-option onboarding-choice" data-role="employer" aria-pressed="false">
+          <span class="account-type-icon" aria-hidden="true">🏢</span>
+          <strong>I'm a care provider</strong>
+          <small>I'm recruiting care staff, want to create vacancies and find suitable candidates.</small>
+          <span class="choice-action">Continue as a care provider →</span>
+        </button>
+      </div>
+      <form class="form-wrap onboarding-form hidden" id="signup-form">
+        <span class="eyebrow" id="selected-role-label">Account details</span>
+        <h2 id="signup-heading">Create your account</h2>
+        <p class="form-intro" id="signup-description">Your account type will be saved when you register.</p>
+        <div class="field"><label for="full-name">Full name</label><input id="full-name" name="full_name" autocomplete="name" required maxlength="120"></div>
+        <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254"></div>
+        <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required><small class="muted">Use at least 8 characters.</small></div>
+        <div class="notice" id="role-notice"></div>
+        <div class="inline-actions"><button class="btn" type="submit" id="create-account">Create account</button><button class="btn secondary" type="button" id="change-role">Change account type</button></div>
+        <p class="auth-switch">Already have an account? <a class="text-button" href="index.html?view=login">Log in</a></p>
+      </form>
+    </section>
+    <div class="onboarding-message" id="onboarding-message" role="status" aria-live="polite"></div>
+  </main>
+  <footer class="footer"><span>© <span id="year"></span> CareMatch</span><span>Skills first. Better care teams.</span></footer>
+</body>
+</html>

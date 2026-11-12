@@ -5,7 +5,7 @@
   const config = window.CAREMATCH_CONFIG || {};
   const configured = config.supabaseUrl && config.supabaseAnonKey && !config.supabaseUrl.includes('YOUR_') && !config.supabaseAnonKey.includes('YOUR_');
   const db = configured && window.supabase ? window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey) : null;
-  let session = null, userProfile = null, activePage = 'home';
+  let session = null, userProfile = null, activePage = new URLSearchParams(window.location.search).get('view') === 'login' ? 'login' : 'home';
   const SKILLS = [
     ['Personal care','Personal care'],['Medication administration','Medication administration'],['Dementia care','Dementia care'],['Moving and handling','Moving and handling'],['Safeguarding adults','Safeguarding adults'],['End of life care','End of life care'],['Live-in support','Live-in support'],['Meal preparation','Meal preparation'],['Infection prevention','Infection prevention'],['Companionship','Companionship'],['Learning disabilities','Learning disabilities'],['Mental health support','Mental health support'],['Catheter care','Catheter care'],['Peg feeding','PEG feeding'],['Record keeping','Record keeping']
   ];
@@ -21,7 +21,7 @@
     main.innerHTML=links.map(([p,l])=>`<button class="nav-link ${activePage===p?'active':''}" data-page="${p}">${l}</button>`).join('');
     account.innerHTML=`<span class="muted" style="font-size:12px;margin-right:8px">${esc(userProfile?.full_name||session.user.email)}</span><button class="btn secondary small" id="logout">Log out</button>`;
   };
-  function setPage(page){activePage=page;nav();render();}
+  function setPage(page){if(page==='register'){window.location.href='onboarding.html';return;}activePage=page;nav();render();}
   let pageClickDelegationReady = false;
   function bindPageButtons(){
     // Use delegated clicks so controls rendered after asynchronous Supabase queries work too.

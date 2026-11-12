@@ -148,3 +148,15 @@ The registration page now asks users to choose **Care professional** or **Care p
 Because your Supabase tables already exist, run `supabase-registration-role-update.sql` once in **Supabase Dashboard → SQL Editor → New query → Run**. Do not rerun the full schema on your existing project. Upload the updated `app.js` and `styles.css` to GitHub Pages. The existing `config.js` remains unchanged.
 
 Existing accounts created before this update with `profiles.role = 'pending'` will still be asked to choose an account type when they next log in. Existing candidate/employer roles are not changed.
+
+
+## Dedicated onboarding flow (account type selection)
+
+The public **Get started** and **Create an account** buttons now open `onboarding.html`. This is a separate page with its own `onboarding.js` file, while sharing the same `config.js`, Supabase project and `styles.css` as the main application.
+
+1. Upload/commit all updated files, including `onboarding.html` and `onboarding.js`, to the same GitHub Pages folder as `index.html`.
+2. No additional Supabase SQL is required if you already ran the supplied `supabase-schema.sql`: its `on_auth_user_created` trigger reads the selected `role` from sign-up metadata and writes it to `public.profiles`.
+3. Confirm that email confirmation redirects to your published `index.html` URL in Supabase Authentication → URL Configuration.
+4. Test with a new candidate email and a separate employer email. The selected role is saved at sign-up; existing accounts are not changed.
+
+The onboarding page uses the existing public/publishable key from `config.js`. Never add a Supabase secret/service-role key to browser files.
