@@ -22,7 +22,17 @@
     account.innerHTML=`<span class="muted" style="font-size:12px;margin-right:8px">${esc(userProfile?.full_name||session.user.email)}</span><button class="btn secondary small" id="logout">Log out</button>`;
   };
   function setPage(page){activePage=page;nav();render();}
-  function bindPageButtons(){document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>setPage(b.dataset.page)));const lo=$('#logout');if(lo)lo.onclick=logout;}
+  let pageClickDelegationReady = false;
+  function bindPageButtons(){
+    // Use delegated clicks so controls rendered after asynchronous Supabase queries work too.
+    if(pageClickDelegationReady) return;
+    pageClickDelegationReady = true;
+    document.addEventListener('click', event => {
+      const pageButton = event.target.closest('[data-page]');
+      if(pageButton){ event.preventDefault(); setPage(pageButton.dataset.page); return; }
+      if(event.target.closest('#logout')){ event.preventDefault(); logout(); }
+    });
+  }
   async function refreshProfile(){if(!session)return;const {data,error}=await db.from('profiles').select('*').eq('id',session.user.id).maybeSingle();if(error)throw error;userProfile=data;}
   async function logout(){await db.auth.signOut();session=null;userProfile=null;activePage='home';nav();render();}
   async function init(){ $('#year').textContent=new Date().getFullYear(); if(!db){renderSetup();return;} const {data:{session:s}}=await db.auth.getSession();session=s;if(session)await refreshProfile();nav();render();db.auth.onAuthStateChange(async(_event,s)=>{session=s;if(s){try{await refreshProfile();}catch(e){err(e);}}else userProfile=null;nav();render();}); }
