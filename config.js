@@ -1,6 +1,6 @@
-/* Add your Supabase project URL and anon/public key here.
-   NEVER put a Supabase service_role key in this file. */
+/* Supabase browser configuration.
+   The publishable key is designed for client-side use. Never put a service_role/secret key here. */
 window.CAREMATCH_CONFIG = {
-  supabaseUrl: 'YOUR_SUPABASE_PROJECT_URL',
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY'
+  supabaseUrl: 'https://ijrqflrxtfqdfhruyaaq.supabase.co',
+  supabaseAnonKey: 'sb_publishable_3ItB3tNnRCzJb93cZSFtKg_ebPmsulG'
 };
