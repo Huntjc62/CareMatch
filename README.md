@@ -139,3 +139,12 @@ Every time you push a change to the selected branch, GitHub Pages will publish t
 - `app.js` – frontend behaviour and Supabase queries
 - `config.js` – public Supabase URL and anon/publishable key
 - `supabase-schema.sql` – database schema, seed data, RLS and matching function
+
+
+## Registration account types update
+
+The registration page now asks users to choose **Care professional** or **Care provider** before creating their account. The selection is sent as Supabase Auth user metadata and copied into `profiles.role` by the database trigger.
+
+Because your Supabase tables already exist, run `supabase-registration-role-update.sql` once in **Supabase Dashboard → SQL Editor → New query → Run**. Do not rerun the full schema on your existing project. Upload the updated `app.js` and `styles.css` to GitHub Pages. The existing `config.js` remains unchanged.
+
+Existing accounts created before this update with `profiles.role = 'pending'` will still be asked to choose an account type when they next log in. Existing candidate/employer roles are not changed.
